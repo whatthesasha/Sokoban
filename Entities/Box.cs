@@ -5,28 +5,28 @@ namespace Sokoban.Entities
 {
     class Box : IEntity
     {
-        public int deltaX { get; set; }
-        public int deltaY { get; set; }
-        public bool IsInPlace { get; set; }
+        public int DeltaX { get; set; }
+        public int DeltaY { get; set; }
+        public bool IsInPlace { get; private set; }
+
         public EntityCommand Act(int x, int y)
         {
             var command = new EntityCommand();
 
-            var newX = x + deltaX;
-            var newY = y + deltaY;
+            var newX = x + DeltaX;
+            var newY = y + DeltaY;
 
             if (CanMoveTo(newX, newY))
             {
-                command.DeltaX = deltaX;
-                command.DeltaY = deltaY;
+                command.DeltaX = DeltaX;
+                command.DeltaY = DeltaY;
                 if (Game.Map[newX, newY].Any(x => x is StorageTargetPoint)) IsInPlace = true;
             }
 
-            deltaX = 0;
-            deltaY = 0;
+            DeltaX = 0;
+            DeltaY = 0;
 
             return command;
-
         }
 
         public bool CanMoveTo(int newX, int newY)
@@ -41,11 +41,7 @@ namespace Sokoban.Entities
 
         public string GetImageFileName()
         {
-            if (IsInPlace)
-            {
-                return "boxinplace.png";
-            }
-            return "box.png";
+            return IsInPlace ? "boxinplace.png" : "box.png";
         }
     }
 }

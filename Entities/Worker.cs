@@ -9,20 +9,20 @@ namespace Sokoban.Entities
     public class Worker : IEntity
     {
         private Dictionary<Key, int> deltaXByKey = new Dictionary<Key, int>()
-    {
-        { Key.Left, -1 },
-        { Key.Right, 1 },
-        { Key.A, -1 },
-        { Key.D, 1 },
-    };
+        {
+            { Key.Left, -1 },
+            { Key.Right, 1 },
+            { Key.A, -1 },
+            { Key.D, 1 },
+        };
 
         private Dictionary<Key, int> deltaYByKey = new Dictionary<Key, int>()
-    {
-        { Key.Up, -1 },
-        { Key.Down, 1 },
-        { Key.W, -1 },
-        { Key.S, 1 },
-    };
+        {
+            { Key.Up, -1 },
+            { Key.Down, 1 },
+            { Key.W, -1 },
+            { Key.S, 1 },
+        };
 
         public EntityCommand Act(int x, int y)
         {
@@ -43,8 +43,8 @@ namespace Sokoban.Entities
             var box = Game.Map[newX, newY].OfType<Box>().FirstOrDefault();
             if (box != null)
             {
-                box.deltaX = deltaX;
-                box.deltaY = deltaY;
+                box.DeltaX = deltaX;
+                box.DeltaY = deltaY;
             }
 
             command.DeltaX = deltaX;
