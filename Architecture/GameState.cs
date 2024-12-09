@@ -1,76 +1,46 @@
-﻿using Avalonia;
-using Sokoban.Entities;
+﻿using Sokoban.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sokoban.Architecture;
 
-public class GameState
+public static class GameState
 {
-    public List<EntityAnimation> Animations = new();
-    
-    public static bool IsOver;
-
-    public void Act()
+    public static void Act()
     {
-        Animations.Clear();
+        var updatedMap = new List<IEntity>[Game.MapWidth, Game.MapHeight];
+        var gameIsOver = true;
 
-        ActAndAddAnimation(Game.Worker, Game.WorkerX, Game.WorkerY);
+        ActAndAddToMap(Game.WorkerX, Game.WorkerY, Game.Worker, updatedMap);
 
         for (var x = 0; x < Game.MapWidth; x++)
             for (var y = 0; y < Game.MapHeight; y++)
-            {
-                var entities = Game.Map[x, y];
-
-                foreach (var entity in entities)
+                foreach (var entity in Game.Map[x, y])
                 {
-                    if (entity == null || entity is Worker)
+                    if (entity is Worker)
                         continue;
 
-                    ActAndAddAnimation(entity, x, y);
+                    ActAndAddToMap(x, y, entity, updatedMap);
+
+                    if (entity is Box box && !box.IsInPlace)
+                        gameIsOver = false;
                 }
-            }
 
-
-        Animations = Animations.OrderByDescending(z => z.Entity.GetDrawingPriority()).ToList();
-        UpdateMap();
-
-        IsOver = Animations.Select(x => x.Entity).OfType<Box>().All(x => x.IsInPlace);
+        Game.Map = updatedMap;
+        Game.IsOver = gameIsOver;
     }
 
-    private void ActAndAddAnimation(IEntity entity, int x, int y)
+    private static void ActAndAddToMap(int x, int y, IEntity entity, List<IEntity>[,] map)
     {
         var command = entity.Act(x, y);
 
-        if (x + command.DeltaX < 0 || x + command.DeltaX >= Game.MapWidth || y + command.DeltaY < 0 ||
-            y + command.DeltaY >= Game.MapHeight)
+        int newX = x + command.DeltaX;
+        var newY = y + command.DeltaY;
+
+        if (!Game.IsValidPosition(newX, newY))
             throw new Exception($"The object {entity.GetType()} falls out of the game field");
 
-        var targetLogicalLocation = new Point(x + command.DeltaX, y + command.DeltaY);
-        Animations.Add(
-            new EntityAnimation
-            {
-                Command = command,
-                Entity = entity,
-                TargetLogicalLocation = targetLogicalLocation,
-                TargetLocation = targetLogicalLocation * Game.ElementSize,
-            });
-    }
-    
-    private void UpdateMap()
-    {
-        var entities = new List<IEntity>[Game.MapWidth, Game.MapHeight];
-        for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-                entities[x, y] = new List<IEntity>();
-        foreach (var e in Animations)
-        {
-            var x = (int)e.TargetLogicalLocation.X;
-            var y = (int)e.TargetLogicalLocation.Y;
-            entities[x, y].Add(e.Entity);
-        }
-
-        Game.Map = entities;
+        map[newX, newY] ??= new List<IEntity>();
+        map[newX, newY].Add(entity);
     }
 }

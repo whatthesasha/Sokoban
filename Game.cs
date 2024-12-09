@@ -14,9 +14,9 @@ public static class Game
 {
     public const int ElementSize = 32;
 
-    private static IReadOnlyList<IEntity?>[,] _map = new IReadOnlyList<IEntity?>[0, 0];
+    private static IReadOnlyList<IEntity>[,] _map = new IReadOnlyList<IEntity>[0, 0];
 
-	public static IReadOnlyList<IEntity?>[,] Map 
+	public static IReadOnlyList<IEntity>[,] Map 
 	{ 
 		get => _map;
 		set
@@ -37,24 +37,12 @@ public static class Game
         }
 	}
 
-	public static int WorkerX { get; private set; }
+    public static bool IsOver;
+
+    public static int WorkerX { get; private set; }
 	public static int WorkerY { get; private set; }
 	public static Worker Worker { get; private set; }
 
-    private static int scores;
-	public static int Scores
-	{
-		get => scores;
-
-		set
-		{
-			if (value < 0)
-			{
-				throw new ArgumentOutOfRangeException();
-			}
-			scores = value;
-		}
-	}
 	public static Key KeyPressed;
 
 	public static int Moves;

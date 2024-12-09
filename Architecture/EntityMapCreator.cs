@@ -7,19 +7,29 @@ namespace Sokoban.Architecture;
 
 public static class EntityMapCreator
 {
-    public static IReadOnlyList<IEntity?>[,] CreateMap(string map, string separator = "\r\n")
+    public static IReadOnlyList<IEntity>[,] CreateMap(string map, string separator = "\r\n")
     {
         var rows = map.Split(new[] { separator, "\n" }, StringSplitOptions.RemoveEmptyEntries);
-        var maxLength = rows.Max(x => x.Length);
-        var result = new IEntity?[maxLength, rows.Length][];
-        for (var y = 0; y < rows.Length; y++)
-            for (var x = 0; x < maxLength; x++)
-                result[x, y] =  new[] { new Flooring(), x < rows[y].Length ? CreateEntityBySymbol(rows[y][x]) : null };
+        var maxRowLength = rows.Max(x => x.Length);
+
+        var result = new IReadOnlyList<IEntity>[maxRowLength, rows.Length];
+
+        for (var x = 0; x < maxRowLength; x++)
+            for (var y = 0; y < rows.Length; y++)
+            {
+                var entities = new List<IEntity>() { new Flooring() };
+                var entity = x < rows[y].Length ? CreateEntityBySymbol(rows[y][x]) : null;
+                if (entity != null)
+                    entities.Add(entity);
+
+                result[x, y] = entities;
+            }
+
         return result;
     }
 
 
-    private static IEntity? CreateEntityBySymbol(char c)
+    private static IEntity CreateEntityBySymbol(char c)
     {
         return c switch
         {

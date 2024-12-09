@@ -1,16 +1,9 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.VisualTree;
-using Sokoban.Architecture;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Sokoban.UI;
 
@@ -28,14 +21,14 @@ public partial class MainWindow : Window
 
     protected override void OnKeyDown(KeyEventArgs e)
     {
-        if (!GameFrame.IsVisible || GameState.IsOver)
+        if (!GameFrame.IsVisible || Game.IsOver)
             return;
 
         Game.KeyPressed = e.Key;
         GameFrame.Act();
 
         UpdateMovesCounter();
-        if (GameState.IsOver) {
+        if (Game.IsOver) {
             if (CurrentLevelIndex + 1 == 11)
             {
                 GameClearNotification.IsVisible = true;
@@ -47,9 +40,8 @@ public partial class MainWindow : Window
 
     private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-       var a = int.Parse((string)((Button)sender).Tag);
-
-        StartGame(a - 1);
+       var levelIndex = int.Parse((string)((Button)sender).Tag);
+        StartGame(levelIndex);
     }
 
     private void Start_Button(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

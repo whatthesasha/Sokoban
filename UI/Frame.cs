@@ -3,25 +3,22 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Sokoban.Architecture;
-using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Sokoban.UI;
 
 public class Frame : UserControl
 {
     private readonly Dictionary<string, Bitmap> bitmaps = new();
-    private readonly GameState gameState;
 
     public Frame()
     {
+        // Otherwise Avalonia designer fails with a null reference exception
         if (Design.IsDesignMode)
             return;
 
-        gameState = new GameState();
         var imagesDirectory = new DirectoryInfo("Images");
         foreach (var e in imagesDirectory.GetFiles("*.png"))
             bitmaps[e.Name] = new Bitmap(e.FullName);
@@ -35,19 +32,26 @@ public class Frame : UserControl
         Act();
     }
 
-    public override void Render(DrawingContext e)
+    public override void Render(DrawingContext drawingContext)
     {
+        // Otherwise Avalonia designer fails with a null reference exception
         if (Design.IsDesignMode)
             return;
 
-        foreach (var a in gameState.Animations)
-            e.DrawImage(bitmaps[a.Entity.GetImageFileName()],
-                new Rect(a.TargetLocation, new Size(Game.ElementSize, Game.ElementSize)));
+        for (var x = 0; x < Game.MapWidth; x++)
+            for (var y = 0; y < Game.MapHeight; y++)
+            {
+                var entities = Game.Map[x, y].OrderByDescending(x => x.GetDrawingPriority());
+                foreach (var entity in entities)
+                {
+                    drawingContext.DrawImage(bitmaps[entity.GetImageFileName()], new Rect(x, y, 1, 1) * Game.ElementSize);
+                }
+            }
     }
 
     public void Act()
     {
-        gameState.Act();
+        GameState.Act();
         InvalidateVisual();
     }
 }
