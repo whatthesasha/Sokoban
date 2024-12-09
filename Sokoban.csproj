@@ -33,6 +33,10 @@
 		<AvaloniaResource Include="Images\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Levels\Level11.txt" />
+	  <None Remove="Levels\Level11.txt" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.2.2" />
 		<PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->

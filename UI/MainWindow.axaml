@@ -14,7 +14,7 @@
 		<StackPanel Name="MainMenu" HorizontalAlignment="Center"
 					VerticalAlignment="Center" IsVisible="True">
 			<Image Source="avares://Sokoban/Images/logo.png" Width="1080" Height="126"/>
-			<Button Background="Transparent" Cursor="Hand" Click="Start_Button"
+			<Button Background="Transparent" Cursor="Hand" Click="Start"
 					VerticalAlignment="Center" HorizontalAlignment="Center">
 				<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
 					<Image Source="/Images/startbutton.png" Width="300" Height="100"/>
@@ -22,25 +22,31 @@
 			</Button>
 		</StackPanel>
 
-			<StackPanel Name="GamePanel" IsVisible="False" HorizontalAlignment="Center"
-					VerticalAlignment="Center" TextElement.Foreground="LavenderBlush">
-				<DockPanel LastChildFill="False">
-			<Button DockPanel.Dock="Right" Name="Back" Click="RestartLevel"> <Image Source="/Images/restart.png" Width="40" Height="40"/> </Button>
-				<Button DockPanel.Dock="Left" Name="Restart" Click="BackToTheMenu"> <Image Source="/Images/backtomenu.png" Width="40" Height="40"/> </Button>
+		<StackPanel Name="GamePanel" IsVisible="False" HorizontalAlignment="Center"
+				VerticalAlignment="Center" TextElement.Foreground="LavenderBlush">
+			<DockPanel LastChildFill="False">
+				<Button DockPanel.Dock="Right" Name="Back" Click="RestartLevel">
+					<Image Source="/Images/restart.png" Width="40" Height="40"/>
+				</Button>
+				<Button DockPanel.Dock="Left" Name="Restart" Click="BackToTheMenu">
+					<Image Source="/Images/backtomenu.png" Width="40" Height="40"/>
+				</Button>
 			</DockPanel>
 			<ui:Frame Name="GameFrame"
 						  HorizontalAlignment="Center" VerticalAlignment="Center"/>
 			<DockPanel LastChildFill="False">
-			<TextBlock DockPanel.Dock="Left" Name="MovesCounter" Height="50" FontFamily="{StaticResource PixelFont}" FontSize="30" />
-			<TextBlock DockPanel.Dock="Right" Name="CurrentLevel" Height="50" FontFamily="{StaticResource PixelFont}" FontSize="30" />
+				<TextBlock DockPanel.Dock="Left" Name="MovesCounter" Height="50" FontFamily="{StaticResource PixelFont}" FontSize="30" />
+				<TextBlock DockPanel.Dock="Right" Name="CurrentLevel" Height="50" FontFamily="{StaticResource PixelFont}" FontSize="30" />
 			</DockPanel>
 		</StackPanel>
-		
+
 		<StackPanel Name="LevelClearNotification" Orientation="Vertical" HorizontalAlignment="Center" IsVisible="False" VerticalAlignment="Center">
 			<Image Source="/Images/levelclear.png" Width="500" Height="205"/>
-		<DockPanel LastChildFill="False">
-		<Button DockPanel.Dock="Right" Name="ToTheNextLevel" Background="Transparent" Click="NextLevel"><Image Source="/Images/nextlevel.png" Width="40" Height="40"/></Button>
-		</DockPanel>
+			<DockPanel LastChildFill="False">
+				<Button DockPanel.Dock="Right" Name="ToTheNextLevel" Background="Transparent" Click="NextLevel">
+					<Image Source="/Images/nextlevel.png" Width="40" Height="40"/>
+				</Button>
+			</DockPanel>
 		</StackPanel>
 
 		<StackPanel Name="GameClearNotification" Orientation="Vertical" HorizontalAlignment="Center" IsVisible="False" VerticalAlignment="Center">
@@ -51,88 +57,77 @@
 				</Button>
 			</DockPanel>
 		</StackPanel>
-		
+
 		<StackPanel Name="LevelMenu" Orientation="Vertical" IsVisible="false" VerticalAlignment="Center" HorizontalAlignment="Center">
 			<DockPanel>
-			<Button DockPanel.Dock="Left" Name="BackToMainMenu" Margin="50,5,0,0" Cursor="Hand" Click="BackToTheMainMenu" HorizontalAlignment="Left">
-				<Image Source="avares://Sokoban/Images/backtomenu.png" Width="70" Height="70"/>
-			</Button>
-			<Image Source="/Images/chooseyourlevel.png" Width="600" Height="200" Margin="0, 0, 0, 0"/>
-		</DockPanel>
-		<StackPanel Name="LevelMenu1to6" Orientation="Horizontal" HorizontalAlignment="Center">
-			
-				<Button Name="Level1" Tag="0" Background="Transparent" Cursor="Hand" Click="Button_Click"
+				<Button DockPanel.Dock="Left" Name="BackToMainMenu" Margin="50,5,0,0" Cursor="Hand" Click="BackToTheMainMenu" HorizontalAlignment="Left">
+					<Image Source="avares://Sokoban/Images/backtomenu.png" Width="70" Height="70"/>
+				</Button>
+				<Image Source="/Images/chooseyourlevel.png" Width="600" Height="200" Margin="0, 0, 0, 0"/>
+			</DockPanel>
+			<UniformGrid HorizontalAlignment="Center" Rows="2">
+				<Button Name="Level1" Tag="0" Background="Transparent" Cursor="Hand" Click="OpenLevel"
 					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/1.png" Width="100" Height="200"/>
-				</StackPanel>
-		</Button>
-		<Button Name="Level2" Tag="1" Background="Transparent" Cursor="Hand" Click="Button_Click"
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/1.png" Width="100" Height="200"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level2" Tag="1" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/2.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level3" Tag="2" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/3.png" Width="100" Height="110"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level4" Tag="3" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/4.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level5" Tag="4" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/5.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level6" Tag="5" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/6.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level7" Tag="6" Background="Transparent" Cursor="Hand" Click="OpenLevel"
 					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/2.png" Width="100" Height="100"/>
-				</StackPanel>
-			</Button>
-		<Button Name="Level3" Tag="2" Background="Transparent" Cursor="Hand" Click="Button_Click"
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/7.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level8" Tag="7" Background="Transparent" Cursor="Hand" Click="OpenLevel"
 					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/3.png" Width="100" Height="110"/>
-				</StackPanel>
-			</Button>
-		<Button Name="Level4" Tag="3" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/4.png" Width="100" Height="100"/>
-				</StackPanel>
-			</Button>
-		<Button Name="Level5" Tag="4" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/5.png" Width="100" Height="100"/>
-				</StackPanel>
-			</Button>
-		<Button Name="Level6" Tag="5" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/6.png" Width="100" Height="100"/>
-				</StackPanel>
-			</Button>
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/8.png" Width="100" Height="100"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level9" Tag="8" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+							VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/9.png" Width="100" Height="110"/>
+					</StackPanel>
+				</Button>
+				<Button Name="Level10" Tag="9" Background="Transparent" Cursor="Hand" Click="OpenLevel"
+						VerticalAlignment="Center">
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image Source="/Images/10.png" Width="150" Height="150"/>
+					</StackPanel>
+				</Button>
+			</UniformGrid>
 		</StackPanel>
-		
-			<StackPanel Name="LevelMenu7to11" Orientation="Horizontal" HorizontalAlignment="Center">
-			
-				<Button Name="Level7" Tag="6" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/7.png" Width="100" Height="100"/>
-				</StackPanel>
-			</Button>
-				<Button Name="Level8" Tag="7" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/8.png" Width="100" Height="100"/>
-				</StackPanel>
-		</Button>
-		<Button Name="Level9" Tag="8" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/9.png" Width="100" Height="110"/>
-				</StackPanel>
-		</Button>
-			<Button Name="Level10" Tag="9" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/10.png" Width="150" Height="150"/>
-				</StackPanel>
-		</Button>
-			<Button Name="Level11" Tag="10" Background="Transparent" Cursor="Hand" Click="Button_Click"
-					VerticalAlignment="Center">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-					<Image Source="/Images/11.png" Width="150" Height="150"/>
-				</StackPanel>
-		</Button>
-		</StackPanel>
-			</StackPanel>
-		
+
 	</Grid>
 </Window>

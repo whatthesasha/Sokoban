@@ -13,6 +13,7 @@ public partial class MainWindow : Window
          .GetFiles(@$"{Environment.CurrentDirectory}\\Levels\\", "*.txt")
          .Select(filePath => File.ReadAllText(filePath)).ToArray();
 
+    private int currentLevelIndex;
 
     public MainWindow()
     {
@@ -28,52 +29,35 @@ public partial class MainWindow : Window
         GameFrame.Act();
 
         UpdateMovesCounter();
-        if (Game.IsOver) {
-            if (CurrentLevelIndex + 1 == 11)
+
+        if (Game.IsOver)
+        {
+            if (currentLevelIndex + 1 == Levels.Length)
             {
                 GameClearNotification.IsVisible = true;
-                return;
             }
+            else
+            {
                 LevelClearNotification.IsVisible = true;
+            } 
         }
     }
 
-    private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void OpenLevel(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-       var levelIndex = int.Parse((string)((Button)sender).Tag);
+        var levelIndex = int.Parse((string)((Button)sender).Tag);
         StartGame(levelIndex);
     }
 
-    private void Start_Button(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void Start(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         MainMenu.IsVisible = false;
         LevelMenu.IsVisible = true;
     }
 
-    private int CurrentLevelIndex;
-    private void StartGame(int levelIndex)
+    private void RestartLevel(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        GamePanel.IsVisible = true;
-        LevelMenu.IsVisible = false;
-
-        Game.KeyPressed = default;
-        Game.Moves = 0;
-        Game.CreateMap(Levels[levelIndex]);
-        GameFrame.Initialize();
-
-        CurrentLevelIndex = levelIndex;
-        CurrentLevel.Text = $"Уровень {levelIndex + 1}";
-        UpdateMovesCounter();
-    }
-
-    private void UpdateMovesCounter()
-    {
-        MovesCounter.Text = $"Шаги: {Game.Moves}";
-    }
-
-    private void RestartLevel (object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        StartGame(CurrentLevelIndex);
+        StartGame(currentLevelIndex);
     }
     
     private void BackToTheMenu(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -94,6 +78,26 @@ public partial class MainWindow : Window
     private void NextLevel(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         LevelClearNotification.IsVisible = false;
-        StartGame(CurrentLevelIndex + 1);
+        StartGame(currentLevelIndex + 1);
+    }
+
+    private void StartGame(int levelIndex)
+    {
+        GamePanel.IsVisible = true;
+        LevelMenu.IsVisible = false;
+
+        Game.KeyPressed = default;
+        Game.Moves = 0;
+        Game.CreateMap(Levels[levelIndex]);
+        GameFrame.Initialize();
+
+        currentLevelIndex = levelIndex;
+        CurrentLevel.Text = $"Уровень {levelIndex + 1}";
+        UpdateMovesCounter();
+    }
+
+    private void UpdateMovesCounter()
+    {
+        MovesCounter.Text = $"Шаги: {Game.Moves}";
     }
 }

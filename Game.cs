@@ -57,6 +57,5 @@ public static class Game
 	public static bool IsValidPosition(int x, int y)
 	{
         return x >= 0 && y >= 0 && y < MapHeight && x < MapWidth;
-
     }
 }
